@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
+using Unity.Services.PlayerAccounts;
 using UnityEngine;
 
 
@@ -78,9 +79,59 @@ public class UCSAuthenticationManager : MonoBehaviour
 	{
 		try
 		{
-			
+			PlayerAccountService.Instance.SignedIn += async ()=>
+			{
+				await AuthenticateWithUnityAccount();
+			}; 
+			await PlayerAccountService.Instance.StartSignInAsync();
+		}
+		catch (AuthenticationException ex)
+		{
+			// Compare error code to AuthenticationErrorCodes
+			// Notify the player with the proper error message
+			Debug.LogException(ex);
+		}
+		catch (RequestFailedException ex)
+		{
+			// Compare error code to AuthenticationErrorCodes
+			// Notify the player with the proper error message
+			Debug.LogException(ex);
 		}
 	}
+
+	async Task AuthenticateWithUnityAccount()
+	{
+		try
+		{
+			await AuthenticationService.Instance.SignInWithUnityAsync(PlayerAccountService.Instance.AccessToken);
+		}
+		catch (AuthenticationException ex)
+		{
+			// Compare error code to AuthenticationErrorCodes
+			// Notify the player with the proper error message
+			Debug.LogException(ex);
+		}
+		catch (RequestFailedException ex)
+		{
+			// Compare error code to AuthenticationErrorCodes
+			// Notify the player with the proper error message
+			Debug.LogException(ex);
+		}
+	}
+
+	public void SignOut()
+	{
+		if (AuthenticationService.Instance.IsSignedIn)
+		{
+			AuthenticationService.Instance.SignOut();			
+		}
+		
+		if (PlayerAccountService.Instance.IsSignedIn)
+		{
+			PlayerAccountService.Instance.SignOut();
+		}
+	}
+	
 
 	// Setup authentication event handlers if desired
 	void SetupEvents()
