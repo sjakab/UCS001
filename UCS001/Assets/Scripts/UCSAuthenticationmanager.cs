@@ -5,7 +5,6 @@ using Unity.Services.Core;
 using Unity.Services.PlayerAccounts;
 using UnityEngine;
 
-
 public class UCSAuthenticationManager : MonoBehaviour
 {
 	enum ESignInMethod : int
@@ -18,7 +17,8 @@ public class UCSAuthenticationManager : MonoBehaviour
 	public SOEvent UserAuthenticationFailed;
 	public SOEvent UserAuthenticationExpired;
 	public SOEvent UserSignedOut;
-
+	public SOEvent ContinueToEnterGame;
+	
 	public async void InitializeAndAuthenticateAsync(int method)
 	{
 		await InitializeAsync();
@@ -119,6 +119,11 @@ public class UCSAuthenticationManager : MonoBehaviour
 		}
 	}
 
+	public void GoToEnterGame()
+	{
+		ContinueToEnterGame?.TriggerEvent();
+	}
+	
 	public void SignOut()
 	{
 		if (AuthenticationService.Instance.IsSignedIn)
@@ -137,11 +142,8 @@ public class UCSAuthenticationManager : MonoBehaviour
 	void SetupEvents()
 	{
 		AuthenticationService.Instance.SignedIn += handleSignIn;
-
 		AuthenticationService.Instance.SignInFailed += handleSignInFailure;
-
 		AuthenticationService.Instance.SignedOut += handleSignOut;
-
 		AuthenticationService.Instance.Expired += handleAuthExpired;
 	}
 
