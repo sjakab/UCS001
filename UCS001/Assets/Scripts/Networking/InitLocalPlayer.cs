@@ -1,7 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 
-public class InitLocalPlayer : MonoBehaviour
+public class InitLocalPlayer : NetworkBehaviour
 {
     [SerializeField] private NetworkObject networkObj;
     [SerializeField] private CharacterController charController;
@@ -12,16 +12,14 @@ public class InitLocalPlayer : MonoBehaviour
 
     void Start()
     {
-        // Disable GOs
-        if (networkObj.IsLocalPlayer)
-        {
-            charController.enabled = true;
+        bool isLocalPlayer = networkObj.IsLocalPlayer;
+            charController.enabled = isLocalPlayer;
 
             if (localPlayerGOsToEnable.Length > 0)
             {
                 for (int i = 0; i < localPlayerGOsToEnable.Length; i++)
                 {
-                    localPlayerGOsToEnable[i].SetActive(true);
+                    localPlayerGOsToEnable[i].SetActive(isLocalPlayer);
                 }
             }
             // Disable Components
@@ -29,7 +27,7 @@ public class InitLocalPlayer : MonoBehaviour
             {
                 for (int i = 0; i < localPlayerComponentsToEnable.Length; i++)
                 {
-                    localPlayerComponentsToEnable[i].enabled = true;
+                    localPlayerComponentsToEnable[i].enabled = isLocalPlayer;
                 }
             }
             // Disable GOs
@@ -37,7 +35,7 @@ public class InitLocalPlayer : MonoBehaviour
             {
                 for (int i = 0; i < localPlayerGOsToDisable.Length; i++)
                 {
-                    localPlayerGOsToDisable[i].SetActive(false);
+                    localPlayerGOsToDisable[i].SetActive(!isLocalPlayer);
                 }
             }
             // Disable Components
@@ -45,9 +43,8 @@ public class InitLocalPlayer : MonoBehaviour
             {
                 for (int i = 0; i < localPlayerComponentsToDisable.Length; i++)
                 {
-                    localPlayerComponentsToDisable[i].enabled = false;
+                    localPlayerComponentsToDisable[i].enabled = !isLocalPlayer;
                 }
             }
-        }        
     }
 }
