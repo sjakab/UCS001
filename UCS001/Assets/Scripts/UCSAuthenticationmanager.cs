@@ -18,11 +18,14 @@ public class UCSAuthenticationManager : MonoBehaviour
 	public SOEvent UserAuthenticationExpired;
 	public SOEvent UserSignedOut;
 	public SOEvent ContinueToEnterGame;
-	
-	public async void InitializeAndAuthenticateAsync(int method)
+
+	private async void Start()
 	{
 		await InitializeAsync();
-		
+	}
+
+	public async void AuthenticateAsync(int method)
+	{
 		switch((ESignInMethod)method)
 		{
 		case ESignInMethod.Anonymous:

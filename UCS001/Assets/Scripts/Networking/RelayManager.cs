@@ -18,8 +18,10 @@ public class RelayManager : MonoBehaviour
     public SOEvent HostJoinGame;
     public SOEvent BackToAuthentication;
     
-    const int m_MaxConnections = 4;
+    public int MaxNumberOfPlayers = 4;
+
     static public string RelayJoinCode;
+    static public Action OnClientGameStarted; 
     
     public void StartHost()
     {
@@ -57,7 +59,7 @@ public class RelayManager : MonoBehaviour
     }
     IEnumerator ConfigureTransportAndStartNgoAsHost()
     {
-        var serverRelayUtilityTask = AllocateRelayServerAndGetJoinCode(m_MaxConnections);
+        var serverRelayUtilityTask = AllocateRelayServerAndGetJoinCode(MaxNumberOfPlayers);
         while (!serverRelayUtilityTask.IsCompleted)
         {
             yield return null;
@@ -78,6 +80,12 @@ public class RelayManager : MonoBehaviour
         yield return null;
     }
 
+    public string JoinCode
+    {
+        set { _inputJoinCode.text = RelayJoinCode = value; }
+        get { return _inputJoinCode.text; }
+    }
+    
     public void StartClient()
     {
         HostJoinGame?.TriggerEvent();

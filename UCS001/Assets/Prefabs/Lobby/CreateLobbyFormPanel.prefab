@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5705387781393901456}
   - component: {fileID: 5327404094757356882}
   - component: {fileID: 2928160582027974714}
-  - component: {fileID: 8287528429205016445}
   m_Layer: 5
   m_Name: CREATELOBBYLBtn
   m_TagString: Untagged
@@ -34,7 +33,6 @@ RectTransform:
   m_Children:
   - {fileID: 788368050656818420}
   m_Father: {fileID: 4122212068386747791}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.75, y: 0.15}
   m_AnchorMax: {x: 0.75, y: 0.15}
@@ -123,8 +121,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8287528429205016445}
-        m_TargetAssemblyTypeName: CreateLobbyButtonHandler, Assembly-CSharp
+      - m_Target: {fileID: 1809213221020261358}
+        m_TargetAssemblyTypeName: CreateLobbyUIManager, Assembly-CSharp
         m_MethodName: CreateNewLobby
         m_Mode: 1
         m_Arguments:
@@ -159,22 +157,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8287528429205016445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 234826178013489526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f078ee3f56e5c44b8fffce323c6266b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lobbyManager: {fileID: 0}
-  createLobbyBtn: {fileID: 2928160582027974714}
-  lobbyNameInputField: {fileID: 3126871947101976616}
-  gameModeInputField: {fileID: 2853677715464258547}
 --- !u!1 &675132014812592164
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +189,6 @@ RectTransform:
   - {fileID: 470939065438507156}
   - {fileID: 6702774166432671507}
   m_Father: {fileID: 1943581407218098251}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -260,7 +241,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5505555978045248385}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -417,7 +397,6 @@ RectTransform:
   m_Children:
   - {fileID: 4761605696856078430}
   m_Father: {fileID: 4122212068386747791}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 0.73}
   m_AnchorMax: {x: 0.25, y: 0.73}
@@ -561,7 +540,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4950171942228678334}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -698,7 +676,6 @@ RectTransform:
   m_Children:
   - {fileID: 5505555978045248385}
   m_Father: {fileID: 4122212068386747791}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.55}
   m_AnchorMax: {x: 0.5, y: 0.55}
@@ -874,7 +851,6 @@ RectTransform:
   m_Children:
   - {fileID: 5575533698928594665}
   m_Father: {fileID: 4122212068386747791}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.4}
   m_AnchorMax: {x: 0.5, y: 0.4}
@@ -1049,7 +1025,6 @@ RectTransform:
   m_Children:
   - {fileID: 5517164079619005203}
   m_Father: {fileID: 4122212068386747791}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.85}
   m_AnchorMax: {x: 1, y: 1}
@@ -1126,7 +1101,6 @@ RectTransform:
   - {fileID: 9027660909110138885}
   - {fileID: 3273891891704816281}
   m_Father: {fileID: 359554450017158463}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1178,7 +1152,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 635328842919402414}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1313,7 +1286,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5505555978045248385}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1448,7 +1420,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5575533698928594665}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1563,7 +1534,7 @@ GameObject:
   - component: {fileID: 4122212068386747791}
   - component: {fileID: 4291689753631319678}
   - component: {fileID: 1603733961927265383}
-  - component: {fileID: 3108198545881826263}
+  - component: {fileID: 1809213221020261358}
   m_Layer: 5
   m_Name: CreateLobbyFormPanel
   m_TagString: Untagged
@@ -1589,7 +1560,6 @@ RectTransform:
   - {fileID: 359554450017158463}
   - {fileID: 635328842919402414}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3, y: 0.15}
   m_AnchorMax: {x: 0.7, y: 0.85}
@@ -1634,7 +1604,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3108198545881826263
+--- !u!114 &1809213221020261358
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1643,7 +1613,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7396035422767921597}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f078ee3f56e5c44b8fffce323c6266b, type: 3}
+  m_Script: {fileID: 11500000, guid: 68537acbb91e8f349ac3a55a70745e04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lobbyManager: {fileID: 0}
@@ -1682,7 +1652,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5575533698928594665}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1837,7 +1806,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4474872121955187909}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
