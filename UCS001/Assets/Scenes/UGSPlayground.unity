@@ -1409,6 +1409,50 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6582065174530431975, guid: 1ab895473ddf6d34fab38c0848016843, type: 3}
   m_PrefabInstance: {fileID: 1065703025}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &734843052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 734843053}
+  - component: {fileID: 734843054}
+  m_Layer: 0
+  m_Name: '[LOBBY]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &734843053
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734843052}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1380293261}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &734843054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734843052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c1a95873c7a01a4fb3f31b0f0cc8dac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &755927851
 GameObject:
   m_ObjectHideFlags: 0
@@ -2301,6 +2345,7 @@ Transform:
   - {fileID: 1206286444}
   - {fileID: 1619044891}
   - {fileID: 2063511581}
+  - {fileID: 734843053}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1549179735
@@ -4920,10 +4965,6 @@ PrefabInstance:
     - target: {fileID: 765755684394913716, guid: 8d830a255782cd5458cc8b8bfba319c0, type: 3}
       propertyPath: m_Name
       value: MultiplayerPanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 765755684394913716, guid: 8d830a255782cd5458cc8b8bfba319c0, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4655405491170667377, guid: 8d830a255782cd5458cc8b8bfba319c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
