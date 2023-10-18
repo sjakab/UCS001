@@ -567,7 +567,7 @@ PrefabInstance:
     m_TransformParent: {fileID: 587453259}
     m_Modifications:
     - target: {fileID: 421529624605972943, guid: 8246fc7a27549434c8ac7f0752a3c78c, type: 3}
-      propertyPath: lobbyMgr
+      propertyPath: _lobbyManager
       value: 
       objectReference: {fileID: 734843054}
     - target: {fileID: 5704908729564640972, guid: 8246fc7a27549434c8ac7f0752a3c78c, type: 3}
