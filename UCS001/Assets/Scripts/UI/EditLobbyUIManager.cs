@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class EditLobbyUIManager : MonoBehaviour
 {
-	[SerializeField] private LobbyManager lobbyMgr;
-	[SerializeField] private TMP_InputField lobbyGameModeTxt;
+	[SerializeField] private LobbyManager _lobbyManager;
+	[SerializeField] private TMP_InputField _lobbyGameModeTxt;
 
 	void OnEnable()
 	{
-		Lobby currentLobby = lobbyMgr.CreatedOrJoinedLobby;
-		lobbyGameModeTxt.text = currentLobby.Data["GameMode"].Value;
+		Lobby currentLobby = _lobbyManager.CreatedOrJoinedLobby;
+		_lobbyGameModeTxt.text = currentLobby.Data["GameMode"].Value;
 	}
 
 	public void UpdateLobbyGameMode()
     {
-		lobbyMgr.UpdateLobbyGameMode(lobbyGameModeTxt.text);
+	    _lobbyManager.UpdateLobbyGameMode(_lobbyGameModeTxt.text);
 	}
 
 	void OnDisable()
 	{
-		lobbyGameModeTxt.text = "";
+		_lobbyGameModeTxt.text = "";
 	}
 }
