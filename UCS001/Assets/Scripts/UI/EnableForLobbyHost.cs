@@ -1,33 +1,32 @@
+using System;
+using System.Collections;
+using System.Reflection;
 using UnityEngine;
 
 public class EnableForLobbyHost : MonoBehaviour
 {
-	[SerializeField] private LobbyManager lobbyMgr;
-	[SerializeField] private GameObject[] TargetGameObjects;
-
-	[SerializeField] private float lobbyUpdateTimer;
-	[SerializeField] private float pollForLobbyUpdatesIntervalInSeconds = 30f;
-
-	// Start is called before the first frame update
-	void Start()
-    {
-		foreach(GameObject go in TargetGameObjects)
-		{
-			go.SetActive(lobbyMgr.IsLobbyHost());
-		}
+	[SerializeField] private LobbyManager lobbyManager;
+	[SerializeField] private GameObject[] targetGameObjects;
+	
+	private void OnEnable()
+	{
+		StartCoroutine(SetLobbyHost());
 	}
 
-    // Update is called once per frame
-    void Update()
-    {
-		lobbyUpdateTimer -= Time.deltaTime;
-		if (lobbyUpdateTimer < 0f)
+	IEnumerator SetLobbyHost()
+	{
+		while (gameObject.activeSelf)
 		{
-			lobbyUpdateTimer = pollForLobbyUpdatesIntervalInSeconds;
-			foreach (GameObject go in TargetGameObjects)
+			bool isHost = lobbyManager.IsLobbyHost();
+			if (isHost)
 			{
-				go.SetActive(lobbyMgr.IsLobbyHost());
+				foreach (GameObject go in targetGameObjects)
+				{
+					go.SetActive(isHost);
+				}
+				break;
 			}
+			yield return null;
 		}
 	}
 }

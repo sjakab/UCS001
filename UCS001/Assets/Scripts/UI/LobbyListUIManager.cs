@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,16 +15,14 @@ public class LobbyListUIManager : MonoBehaviour
 
 	[SerializeField] private Button createLobbyButton;
 
-	private float lobbyUpdateTimer;
-	[SerializeField] private float pollForLobbyUIUpdatesIntervalInSeconds = 30f;
-
+	[SerializeField] private float lobbyUpdateTime = 5.0f;
 
 	private async void OnEnable()
 	{
 		Debug.Log("ON ENABLE!!!");
 		LobbyRecordConfigurator.onJoinLobby += OnJoinLobbyClicked;
 		await lobbyManager.ListLobbies();
-		UpdateLobbyList();
+		StartCoroutine(UpdateLobbies());
 	}
 
 	private void Start()
@@ -30,14 +30,12 @@ public class LobbyListUIManager : MonoBehaviour
 		lobbyRecords = new List<GameObject>();
 	}
 
-	// Update is called once per frame
-	void Update()
+	IEnumerator UpdateLobbies()
 	{
-		lobbyUpdateTimer -= Time.deltaTime;
-		if (lobbyUpdateTimer < 0f)
+		while (gameObject.activeSelf)
 		{
-			lobbyUpdateTimer = pollForLobbyUIUpdatesIntervalInSeconds;
 			UpdateLobbyList();
+			yield return new WaitForSeconds(lobbyUpdateTime);
 		}
 	}
 
@@ -45,7 +43,8 @@ public class LobbyListUIManager : MonoBehaviour
 	public void UpdateLobbyList()
 	{
 		LobbyRecordConfigurator lrc;
-		for (int i = 0; i < lobbyManager.QueriedLobbies.Count; i++)
+		int loopLength = Mathf.Max(lobbyManager.QueriedLobbies.Count, lobbyRecords.Count);  
+		for (int i = 0; i < loopLength; i++)
 		{
 			if (i >= lobbyRecords.Count)
 			{
@@ -56,6 +55,16 @@ public class LobbyListUIManager : MonoBehaviour
 				lrc.LobbyGameMode.text = lobbyManager.QueriedLobbies[i].Data["GameMode"].Value;
 				lrc.LobbyPlayerCount.text = lobbyManager.QueriedLobbies[i].MaxPlayers.ToString();
 				lobbyRecords.Add(lobbySingleRecordGO);
+			}
+			else if (i >= lobbyManager.QueriedLobbies.Count)
+			{
+				int j;
+				for (j = i; j < lobbyRecords.Count; ++j)
+				{
+					Destroy(lobbyRecords[j]);
+				}
+				lobbyRecords.RemoveRange(i, j - i);
+				break;
 			}
 			else
 			{

@@ -18,7 +18,7 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 	[SerializeField] private TMP_Text playerNameTxt;
 	[SerializeField] private GameObject playersPanel;
 
-	[SerializeField] private float lobbyUpdateTimer = 5.0f;
+	[SerializeField] private float lobbyUpdateTime = 5.0f;
 
 	private void OnEnable()
 	{
@@ -42,8 +42,14 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 		{
 			lobbyNameTxt.text = lobbyManager.GetCurrentLobbyName();
 			playerNameTxt.text = lobbyManager.GetCurrentPlayerName();
-			UpdatePlayerList();
-			yield return new WaitForSeconds(lobbyUpdateTimer);
+			if (UpdatePlayerList())
+			{
+				yield return new WaitForSeconds(lobbyUpdateTime);
+			}
+			else
+			{
+				yield return null;
+			}
 		}
 	}
 
@@ -76,11 +82,11 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 	}
 
 	[ContextMenu("UpdatePlayersList")]
-	public void UpdatePlayerList()
+	public bool UpdatePlayerList()
 	{
 		if (lobbyManager.CreatedOrJoinedLobby == null)
 		{
-			return;
+			return false;
 		}
 		
 		PlayerRecordConfigurator plyrc;
@@ -103,6 +109,7 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 				plyrc.PlayerColor.text = lobbyManager.GetPlayersInCurrentLobby()[i].Data["PlayerColor"].Value;
 			}
 		}
+		return true;
 	}
 
 	private void OnGameStarted()
