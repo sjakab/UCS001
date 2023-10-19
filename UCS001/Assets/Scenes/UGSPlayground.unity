@@ -223,6 +223,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CreateLobbyFormPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 7396035422767921597, guid: ba7c4ab2d50a8cd4ab7ad2f9f88fd379, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7882191273800245588, guid: ba7c4ab2d50a8cd4ab7ad2f9f88fd379, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -468,9 +472,65 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1392964323419252019, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392964323419252019, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2328907902827528895, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2328907902827528895, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987402591141592446, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987402591141592446, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987402591141592446, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987402591141592446, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 3305747691098813019, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3305747691098813019, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.9999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 3305747691098813019, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.3899897
+      objectReference: {fileID: 0}
     - target: {fileID: 6221376895437279056, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
       propertyPath: m_Name
       value: LobbiesPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6221376895437279056, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7119030430792365787, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7119030430792365787, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 8201503327502666508, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
       propertyPath: lobbyManager
@@ -2047,25 +2107,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 734843054}
     - target: {fileID: 6796910558957652529, guid: 1a2acc402e238b342a0a3993bb898051, type: 3}
-      propertyPath: lobbyMgr
-      value: 
-      objectReference: {fileID: 734843054}
-    - target: {fileID: 6796910558957652529, guid: 1a2acc402e238b342a0a3993bb898051, type: 3}
       propertyPath: lobbyManager
       value: 
       objectReference: {fileID: 734843054}
-    - target: {fileID: 6796910558957652529, guid: 1a2acc402e238b342a0a3993bb898051, type: 3}
-      propertyPath: targetGameObjects.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6796910558957652529, guid: 1a2acc402e238b342a0a3993bb898051, type: 3}
-      propertyPath: targetGameObjects.Array.data[0]
-      value: 
-      objectReference: {fileID: 2059044174}
-    - target: {fileID: 6796910558957652529, guid: 1a2acc402e238b342a0a3993bb898051, type: 3}
-      propertyPath: targetGameObjects.Array.data[1]
-      value: 
-      objectReference: {fileID: 1301587627}
     - target: {fileID: 7585168441001354293, guid: 1a2acc402e238b342a0a3993bb898051, type: 3}
       propertyPath: m_Name
       value: LobbyPlayersList
@@ -2836,6 +2880,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EditPlayerFormPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 2211564137416161444, guid: 4c0bfe730bbda9442a98f5d9525f76ac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6403165150342564843, guid: 4c0bfe730bbda9442a98f5d9525f76ac, type: 3}
       propertyPath: lobbyMgr
       value: 
@@ -2949,11 +2997,6 @@ MonoBehaviour:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2211564137416161444, guid: 4c0bfe730bbda9442a98f5d9525f76ac, type: 3}
   m_PrefabInstance: {fileID: 1207682052}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1301587627 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3393857326041317949, guid: 1a2acc402e238b342a0a3993bb898051, type: 3}
-  m_PrefabInstance: {fileID: 927847750}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1371328334 stripped
 GameObject:
@@ -5282,11 +5325,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2059044174 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8611513376208747588, guid: 1a2acc402e238b342a0a3993bb898051, type: 3}
-  m_PrefabInstance: {fileID: 927847750}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2063511580
 GameObject:
   m_ObjectHideFlags: 0
@@ -5677,6 +5715,10 @@ PrefabInstance:
     - target: {fileID: 765755684394913716, guid: 8d830a255782cd5458cc8b8bfba319c0, type: 3}
       propertyPath: m_Name
       value: MultiplayerPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 765755684394913716, guid: 8d830a255782cd5458cc8b8bfba319c0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4655405491170667377, guid: 8d830a255782cd5458cc8b8bfba319c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

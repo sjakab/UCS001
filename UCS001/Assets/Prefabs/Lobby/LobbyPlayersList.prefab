@@ -2464,7 +2464,7 @@ MonoBehaviour:
   lobbyNameTxt: {fileID: 7776175873352871014}
   playerNameTxt: {fileID: 2660336429323111529}
   playersPanel: {fileID: 7585168441001354293}
-  lobbyUpdateTimer: 5
+  lobbyUpdateTime: 5
 --- !u!114 &6796910558957652529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2477,12 +2477,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74d82fc632643b24e96c1802d72607ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyMgr: {fileID: 0}
-  TargetGameObjects:
+  lobbyManager: {fileID: 0}
+  targetGameObjects:
   - {fileID: 8611513376208747588}
   - {fileID: 3393857326041317949}
-  lobbyUpdateTimer: 0
-  pollForLobbyUpdatesIntervalInSeconds: 5
 --- !u!1 &8611513376208747588
 GameObject:
   m_ObjectHideFlags: 0
