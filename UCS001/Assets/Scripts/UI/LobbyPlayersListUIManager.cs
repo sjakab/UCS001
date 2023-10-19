@@ -8,7 +8,7 @@ using Unity.Services.Authentication;
 
 public class LobbyPlayersListUIManager : MonoBehaviour
 {
-	[SerializeField] private LobbyManager lobbyMgr;
+	[SerializeField] private LobbyManager lobbyManager;
 	[SerializeField] private GameObject playerSingleRecordPrefab;
 	private List<GameObject> playerRecords;
 	[SerializeField] private Transform container;
@@ -18,45 +18,48 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 	[SerializeField] private TMP_Text playerNameTxt;
 	[SerializeField] private GameObject playersPanel;
 
-	private float lobbyUpdateTimer;
-	[SerializeField] private float pollForPlayerUIUpdatesIntervalInSeconds = 30f;
-
+	[SerializeField] private float lobbyUpdateTimer = 5.0f;
 
 	private void OnEnable()
 	{
 		Debug.Log("ON ENABLE!!!");
 
 		RelayManager.OnClientGameStarted += OnGameStarted;
-		lobbyUpdateTimer = 2f;
-		lobbyNameTxt.text = lobbyMgr.GetCurrentLobbyName();
-		playerNameTxt.text = lobbyMgr.GetCurrentPlayerName();
+		lobbyNameTxt.text = lobbyManager.GetCurrentLobbyName();
+		playerNameTxt.text = lobbyManager.GetCurrentPlayerName();
+
+		StartCoroutine(UpdateLobby());
+	}
+
+	private void OnDisable()
+	{
+		RelayManager.OnClientGameStarted -= OnGameStarted;
+	}
+
+	IEnumerator UpdateLobby()
+	{
+		while (gameObject.activeSelf) 
+		{
+			lobbyNameTxt.text = lobbyManager.GetCurrentLobbyName();
+			playerNameTxt.text = lobbyManager.GetCurrentPlayerName();
+			UpdatePlayerList();
+			yield return new WaitForSeconds(lobbyUpdateTimer);
+		}
 	}
 
 	void Start()
 	{
 		playerRecords = new List<GameObject>();
-		lobbyNameTxt.text = lobbyMgr.GetCurrentLobbyName();
-		playerNameTxt.text = lobbyMgr.GetCurrentPlayerName();
-	}
-
-	void Update()
-	{
-		lobbyUpdateTimer -= Time.deltaTime;
-		if (lobbyUpdateTimer < 0f)
-		{
-			lobbyUpdateTimer = pollForPlayerUIUpdatesIntervalInSeconds;
-			lobbyNameTxt.text = lobbyMgr.GetCurrentLobbyName();
-			playerNameTxt.text = lobbyMgr.GetCurrentPlayerName();
-			UpdatePlayerList();
-		}
+		lobbyNameTxt.text = lobbyManager.GetCurrentLobbyName();
+		playerNameTxt.text = lobbyManager.GetCurrentPlayerName();
 	}
 
 	public void OnClickLeaveLobbyButton()
 	{
 		// If player is host and another player is in the lobby migrate the host to the other player.
-		List<Player> playersInLobby = lobbyMgr.GetPlayersInCurrentLobby();
+		List<Player> playersInLobby = lobbyManager.GetPlayersInCurrentLobby();
 
-		if (lobbyMgr.IsLobbyHost() && (playersInLobby.Count > 1) )
+		if (lobbyManager.IsLobbyHost() && (playersInLobby.Count > 1) )
 		{
 			string newHostPlayerId;
 			foreach(Player plyr in playersInLobby)
@@ -64,35 +67,40 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 				if (plyr.Id != AuthenticationService.Instance.PlayerId)
 				{
 					newHostPlayerId = plyr.Id;
-					lobbyMgr.MigrateLobbyHost(newHostPlayerId);
+					lobbyManager.MigrateLobbyHost(newHostPlayerId);
 					break;
 				}
 			}
 		}
-		lobbyMgr.LeaveLobby();
+		lobbyManager.LeaveLobby();
 	}
 
 	[ContextMenu("UpdatePlayersList")]
 	public void UpdatePlayerList()
 	{
+		if (lobbyManager.CreatedOrJoinedLobby == null)
+		{
+			return;
+		}
+		
 		PlayerRecordConfigurator plyrc;
-		for (int i = 0; i < lobbyMgr.GetPlayersInCurrentLobby().Count; i++)
+		for (int i = 0; i < lobbyManager.GetPlayersInCurrentLobby().Count; i++)
 		{
 			if (i >= playerRecords.Count)
 			{
 				GameObject PlayerSingleRecordGO = Instantiate(playerSingleRecordPrefab, container);
 				plyrc = PlayerSingleRecordGO.GetComponent<PlayerRecordConfigurator>();
-				plyrc.PlayerId = lobbyMgr.GetPlayersInCurrentLobby()[i].Id;
-				plyrc.PlayerName.text = lobbyMgr.GetPlayersInCurrentLobby()[i].Data["PlayerName"].Value;
-				plyrc.PlayerColor.text = lobbyMgr.GetPlayersInCurrentLobby()[i].Data["PlayerColor"].Value;
+				plyrc.PlayerId = lobbyManager.GetPlayersInCurrentLobby()[i].Id;
+				plyrc.PlayerName.text = lobbyManager.GetPlayersInCurrentLobby()[i].Data["PlayerName"].Value;
+				plyrc.PlayerColor.text = lobbyManager.GetPlayersInCurrentLobby()[i].Data["PlayerColor"].Value;
 				playerRecords.Add(PlayerSingleRecordGO);
 			}
 			else
 			{
 				plyrc = playerRecords[i].GetComponent<PlayerRecordConfigurator>();
-				plyrc.PlayerId = lobbyMgr.GetPlayersInCurrentLobby()[i].Id;
-				plyrc.PlayerName.text = lobbyMgr.GetPlayersInCurrentLobby()[i].Data["PlayerName"].Value;
-				plyrc.PlayerColor.text = lobbyMgr.GetPlayersInCurrentLobby()[i].Data["PlayerColor"].Value;
+				plyrc.PlayerId = lobbyManager.GetPlayersInCurrentLobby()[i].Id;
+				plyrc.PlayerName.text = lobbyManager.GetPlayersInCurrentLobby()[i].Data["PlayerName"].Value;
+				plyrc.PlayerColor.text = lobbyManager.GetPlayersInCurrentLobby()[i].Data["PlayerColor"].Value;
 			}
 		}
 	}
@@ -102,10 +110,4 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 		Debug.Log("JOIN LOBBY CLICKED BY CLIENT!!");
 		playersPanel.SetActive(false);
 	}
-
-	private void OnDisable()
-	{
-		RelayManager.OnClientGameStarted -= OnGameStarted;
-	}
-
 }

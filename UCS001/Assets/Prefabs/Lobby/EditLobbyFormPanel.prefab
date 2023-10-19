@@ -952,8 +952,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 411774e6b19406d4c95789aad28e42fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lobbyManager: {fileID: 0}
-  _lobbyGameModeTxt: {fileID: 4536357122133126240}
+  lobbyManager: {fileID: 0}
+  lobbyGameModeTxt: {fileID: 4536357122133126240}
 --- !u!1 &6698727964777085988
 GameObject:
   m_ObjectHideFlags: 0

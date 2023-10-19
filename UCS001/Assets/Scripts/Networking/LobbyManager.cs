@@ -323,7 +323,6 @@ public class LobbyManager : MonoBehaviour
 
 	public List<Player> GetPlayersInCurrentLobby()
 	{
-//		PrintPlayersInLobby(CreatedOrJoinedLobby);
 		return CreatedOrJoinedLobby.Players;
 	}
 
