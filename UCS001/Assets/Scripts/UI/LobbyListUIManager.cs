@@ -15,7 +15,7 @@ public class LobbyListUIManager : MonoBehaviour
 
 	[SerializeField] private Button createLobbyButton;
 
-	[SerializeField] private float lobbyUpdateTime = 5.0f;
+	[SerializeField] private float lobbyUpdateTime = 1.0f;
 
 	private async void OnEnable()
 	{
@@ -34,13 +34,19 @@ public class LobbyListUIManager : MonoBehaviour
 	{
 		while (gameObject.activeSelf)
 		{
-			UpdateLobbyList();
-			yield return new WaitForSeconds(lobbyUpdateTime);
+			if (UpdateLobbyList())
+			{
+				yield return new WaitForSeconds(lobbyUpdateTime);
+			}
+			else
+			{
+				yield return null;
+			}
 		}
 	}
 
 	[ContextMenu("UpdateLobbies")]
-	public void UpdateLobbyList()
+	public bool UpdateLobbyList()
 	{
 		LobbyRecordConfigurator lrc;
 		int loopLength = Mathf.Max(lobbyManager.QueriedLobbies.Count, lobbyRecords.Count);  
@@ -61,7 +67,10 @@ public class LobbyListUIManager : MonoBehaviour
 				int j;
 				for (j = i; j < lobbyRecords.Count; ++j)
 				{
-					Destroy(lobbyRecords[j]);
+					if (lobbyRecords[j] != null)
+					{
+						Destroy(lobbyRecords[j]);
+					}
 				}
 				lobbyRecords.RemoveRange(i, j - i);
 				break;
@@ -75,6 +84,8 @@ public class LobbyListUIManager : MonoBehaviour
 				lrc.LobbyPlayerCount.text = lobbyManager.QueriedLobbies[i].MaxPlayers.ToString();
 			}
 		}
+
+		return true;
 	}
 
 	private void OnJoinLobbyClicked(string lobbyId)

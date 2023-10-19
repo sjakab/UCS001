@@ -18,7 +18,7 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 	[SerializeField] private TMP_Text playerNameTxt;
 	[SerializeField] private GameObject playersPanel;
 
-	[SerializeField] private float lobbyUpdateTime = 5.0f;
+	[SerializeField] private float lobbyUpdateTime = 1.0f;
 
 	private void OnEnable()
 	{
@@ -28,7 +28,7 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 		lobbyNameTxt.text = lobbyManager.GetCurrentLobbyName();
 		playerNameTxt.text = lobbyManager.GetCurrentPlayerName();
 
-		StartCoroutine(UpdateLobby());
+		StartCoroutine(UpdateLobbyPlayerList());
 	}
 
 	private void OnDisable()
@@ -36,7 +36,7 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 		RelayManager.OnClientGameStarted -= OnGameStarted;
 	}
 
-	IEnumerator UpdateLobby()
+	IEnumerator UpdateLobbyPlayerList()
 	{
 		while (gameObject.activeSelf) 
 		{
@@ -90,23 +90,37 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 		}
 		
 		PlayerRecordConfigurator plyrc;
-		for (int i = 0; i < lobbyManager.GetPlayersInCurrentLobby().Count; i++)
+		var players = lobbyManager.GetPlayersInCurrentLobby();
+		int loopLength = Mathf.Max(players.Count, playerRecords.Count);
+		for (int i = 0; i < loopLength; i++)
 		{
 			if (i >= playerRecords.Count)
 			{
 				GameObject PlayerSingleRecordGO = Instantiate(playerSingleRecordPrefab, container);
 				plyrc = PlayerSingleRecordGO.GetComponent<PlayerRecordConfigurator>();
-				plyrc.PlayerId = lobbyManager.GetPlayersInCurrentLobby()[i].Id;
-				plyrc.PlayerName.text = lobbyManager.GetPlayersInCurrentLobby()[i].Data["PlayerName"].Value;
-				plyrc.PlayerColor.text = lobbyManager.GetPlayersInCurrentLobby()[i].Data["PlayerColor"].Value;
+				plyrc.PlayerId = players[i].Id;
+				plyrc.PlayerName.text = players[i].Data["PlayerName"].Value;
+				plyrc.PlayerColor.text = players[i].Data["PlayerColor"].Value;
 				playerRecords.Add(PlayerSingleRecordGO);
+			}
+			else if (i >= players.Count)
+			{
+				int j;
+				for (j = i; j < playerRecords.Count; ++j)
+				{
+					if (playerRecords[j] != null)
+					{
+						Destroy(playerRecords[j]);
+					}
+				}
+				playerRecords.RemoveRange(i, j - i);
 			}
 			else
 			{
 				plyrc = playerRecords[i].GetComponent<PlayerRecordConfigurator>();
-				plyrc.PlayerId = lobbyManager.GetPlayersInCurrentLobby()[i].Id;
-				plyrc.PlayerName.text = lobbyManager.GetPlayersInCurrentLobby()[i].Data["PlayerName"].Value;
-				plyrc.PlayerColor.text = lobbyManager.GetPlayersInCurrentLobby()[i].Data["PlayerColor"].Value;
+				plyrc.PlayerId = players[i].Id;
+				plyrc.PlayerName.text = players[i].Data["PlayerName"].Value;
+				plyrc.PlayerColor.text = players[i].Data["PlayerColor"].Value;
 			}
 		}
 		return true;
