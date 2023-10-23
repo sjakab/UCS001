@@ -32,7 +32,6 @@ public class RelayManager : MonoBehaviour
     public static async Task<RelayServerData> AllocateRelayServerAndGetJoinCode(int maxConnections, string region = null)
     {
         Allocation allocation;
-        string createJoinCode;
         try
         {
             allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections, region);

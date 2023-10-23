@@ -11,14 +11,14 @@ public class LobbyManager : MonoBehaviour
 {
 	// Reference used for implementing Lobby with Relay
 	// and for referencing the MaxNumberOfPlayers variable.
-	[SerializeField] private RelayManager relayMGR;
+	[SerializeField] private RelayManager relayManager;
 
 	public Unity.Services.Lobbies.Models.Lobby CreatedOrJoinedLobby;
 
 	private bool keepLobbyActive;
-	[SerializeField] private float heartbeatIntervalInSeconds = 25f;
+	[SerializeField] private float heartbeatIntervalInSeconds = 30.0f;
 	private float lobbyUpdateTimer;
-	[SerializeField] private float pollForLobbyUpdatesIntervalInSeconds = 60f;
+	[SerializeField] private float pollForLobbyUpdatesIntervalInSeconds = 3.0f;
 
 	public List<Lobby> QueriedLobbies;
 
@@ -115,7 +115,7 @@ public class LobbyManager : MonoBehaviour
 
 			// Create a Lobby.
 			LobbyName = lobbyName;
-			CreatedOrJoinedLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, relayMGR.MaxNumberOfPlayers, createLobbyOptions);
+			CreatedOrJoinedLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, relayManager.MaxNumberOfPlayers, createLobbyOptions);
 
 			// Set flag to instruct heartbeat Coroutine that it should continue to "ping" the Lobby every X seconds.  
 			keepLobbyActive = true;
@@ -153,7 +153,7 @@ public class LobbyManager : MonoBehaviour
 			};
 
 			// Create a Lobby, passing in the CreateLobbyOptions to set it to private..
-			CreatedOrJoinedLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, relayMGR.MaxNumberOfPlayers, createLobbyOptions);
+			CreatedOrJoinedLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, relayManager.MaxNumberOfPlayers, createLobbyOptions);
 
 			// Set flag to instruct heartbeat Coroutine that it should continue to "ping" the Lobby every X seconds.  
 			keepLobbyActive = true;
@@ -398,19 +398,16 @@ public class LobbyManager : MonoBehaviour
 				Debug.Log($"POLL ----- START CODE  {CreatedOrJoinedLobby.Data["StartCode"].Value}");
 				Debug.Log($"POLL ----- IS START CODE CHANGED FROM ZERO?? {CreatedOrJoinedLobby.Data["StartCode"].Value != "0"}");
 
+				Debug.Log($"POLL ----- JOIN CODE IN RELAY MGR  {relayManager.JoinCode}");
+				Debug.Log($"POLL ----- IS JOIN CODE IN RELAY SAME AS START CODE?? {CreatedOrJoinedLobby.Data["StartCode"].Value != "0" && (relayManager.JoinCode != CreatedOrJoinedLobby.Data["StartCode"].Value)}");
 
-				Debug.Log($"POLL ----- JOIN CODE IN RELAY MGR  {relayMGR.JoinCode}");
-				Debug.Log($"POLL ----- IS JOIN CODE IN RELAY SAME AS START CODE?? {CreatedOrJoinedLobby.Data["StartCode"].Value != "0" && (relayMGR.JoinCode != CreatedOrJoinedLobby.Data["StartCode"].Value)}");
-
-
-				if (CreatedOrJoinedLobby.Data["StartCode"].Value != "0" && (relayMGR.JoinCode != CreatedOrJoinedLobby.Data["StartCode"].Value))
+				if (CreatedOrJoinedLobby.Data["StartCode"].Value != "0" && (relayManager.JoinCode != CreatedOrJoinedLobby.Data["StartCode"].Value))
 				// START GAME
 				{
-					if (!IsLobbyHost())
-					// Only run for clients as host joins automatically.
+					if (!IsLobbyHost()) // Only run for joined clients automatically.
 					{
-						relayMGR.JoinCode = CreatedOrJoinedLobby.Data["StartCode"].Value;
-						relayMGR.StartClient();
+						relayManager.JoinCode = CreatedOrJoinedLobby.Data["StartCode"].Value;
+						relayManager.StartClient();
 					}
 				}
 			}
@@ -441,8 +438,8 @@ public class LobbyManager : MonoBehaviour
 			try
 			{
 				Debug.Log("Start Game");
-				relayMGR.StartHost();
-				string relayCode = relayMGR.JoinCode;
+				relayManager.StartHost();
+				string relayCode = relayManager.JoinCode;
 
 				Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(CreatedOrJoinedLobby.Id, new UpdateLobbyOptions
 				{
