@@ -9,6 +9,8 @@ using Unity.Services.Authentication;
 public class LobbyPlayersListUIManager : MonoBehaviour
 {
 	[SerializeField] private LobbyManager lobbyManager;
+	[SerializeField] private GameObject startButton;
+	[SerializeField] private GameObject editLobbyButton;
 	[SerializeField] private GameObject playerSingleRecordPrefab;
 	private List<GameObject> playerRecords;
 	[SerializeField] private Transform container;
@@ -24,16 +26,13 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 	{
 		Debug.Log("ON ENABLE!!!");
 
-		RelayManager.OnClientGameStarted += OnGameStarted;
+		bool isLobbyHost = lobbyManager.IsLobbyHost();
+		startButton.SetActive(isLobbyHost);
+		editLobbyButton.SetActive(isLobbyHost);
 		lobbyNameTxt.text = lobbyManager.GetCurrentLobbyName();
 		playerNameTxt.text = lobbyManager.GetCurrentPlayerName();
 
 		StartCoroutine(UpdateLobbyPlayerList());
-	}
-
-	private void OnDisable()
-	{
-		RelayManager.OnClientGameStarted -= OnGameStarted;
 	}
 
 	IEnumerator UpdateLobbyPlayerList()
@@ -55,9 +54,15 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 
 	void Start()
 	{
+		RelayManager.OnGameServerStarted += OnGameServerStarted;
+		RelayManager.OnGameClientStarted += OnGameClientStarted;
 		playerRecords = new List<GameObject>();
-		lobbyNameTxt.text = lobbyManager.GetCurrentLobbyName();
-		playerNameTxt.text = lobbyManager.GetCurrentPlayerName();
+	}
+	
+	private void OnDestroy()
+	{
+		RelayManager.OnGameServerStarted -= OnGameServerStarted;
+		RelayManager.OnGameClientStarted -= OnGameClientStarted;
 	}
 
 	public void OnClickLeaveLobbyButton()
@@ -88,7 +93,7 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 		{
 			return false;
 		}
-		
+
 		PlayerRecordConfigurator plyrc;
 		var players = lobbyManager.GetPlayersInCurrentLobby();
 		int loopLength = Mathf.Max(players.Count, playerRecords.Count);
@@ -126,9 +131,17 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 		return true;
 	}
 
-	private void OnGameStarted()
+	async void OnGameServerStarted()
 	{
-		Debug.Log("JOIN LOBBY CLICKED BY CLIENT!!");
+		Debug.Log("LOBBY STARTED A GAME SERVER!!");
 		playersPanel.SetActive(false);
+		lobbyManager.UpdateLobbyRelayJoinCode();
+	}
+	
+	private void OnGameClientStarted()
+	{
+		Debug.Log("LOBBY JOINED A GAME!!");
+		playersPanel.SetActive(false);
+		lobbyManager.RelayManager.DisplayJoinCode();
 	}
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ public class LobbyManager : MonoBehaviour
 	// Reference used for implementing Lobby with Relay
 	// and for referencing the MaxNumberOfPlayers variable.
 	[SerializeField] private RelayManager relayManager;
+	public RelayManager RelayManager => relayManager;
 
 	public Unity.Services.Lobbies.Models.Lobby CreatedOrJoinedLobby;
 
@@ -54,6 +56,14 @@ public class LobbyManager : MonoBehaviour
 	private void Update()
 	{
 		LobbyPollForUpdates();
+	}
+
+	private void OnDestroy()
+	{
+		if (CreatedOrJoinedLobby != null)
+		{
+			LeaveLobby();
+		}
 	}
 
 	public bool IsLobbyHost()
@@ -248,7 +258,7 @@ public class LobbyManager : MonoBehaviour
 		}
 		catch (LobbyServiceException lse)
 		{
-			Debug.Log(lse);
+			Debug.LogError(lse);
 		}
 	}
 
@@ -391,23 +401,26 @@ public class LobbyManager : MonoBehaviour
 
 			if (CreatedOrJoinedLobby != null)
 			{
-				Lobby lobby = await Lobbies.Instance.GetLobbyAsync(CreatedOrJoinedLobby.Id);
-				CreatedOrJoinedLobby = lobby;
+				 Lobby lobby = await Lobbies.Instance.GetLobbyAsync(CreatedOrJoinedLobby.Id);
+				 CreatedOrJoinedLobby = lobby; 
 				Debug.Log("Lobby Poll For Updates - BIPP!!!!");
 
-				Debug.Log($"POLL ----- START CODE  {CreatedOrJoinedLobby.Data["StartCode"].Value}");
-				Debug.Log($"POLL ----- IS START CODE CHANGED FROM ZERO?? {CreatedOrJoinedLobby.Data["StartCode"].Value != "0"}");
-
-				Debug.Log($"POLL ----- JOIN CODE IN RELAY MGR  {relayManager.JoinCode}");
-				Debug.Log($"POLL ----- IS JOIN CODE IN RELAY SAME AS START CODE?? {CreatedOrJoinedLobby.Data["StartCode"].Value != "0" && (relayManager.JoinCode != CreatedOrJoinedLobby.Data["StartCode"].Value)}");
-
-				if (CreatedOrJoinedLobby.Data["StartCode"].Value != "0" && (relayManager.JoinCode != CreatedOrJoinedLobby.Data["StartCode"].Value))
-				// START GAME
+				if (CreatedOrJoinedLobby.Data.ContainsKey("StartCode"))
 				{
-					if (!IsLobbyHost()) // Only run for joined clients automatically.
+					var joinCode = CreatedOrJoinedLobby.Data["StartCode"].Value;
+					Debug.Log($"POLL ----- START CODE  {joinCode}");
+					Debug.Log(
+						$"POLL ----- IS START CODE CHANGED FROM ZERO?? {(joinCode != "0").ToString()}");
+
+					Debug.Log($"POLL ----- JOIN CODE IN RELAY MGR  {relayManager.JoinCode}");
+
+					bool hasJoinCode = (joinCode != "0" && relayManager.JoinCode != joinCode); 
+					Debug.Log($"POLL ----- IS JOIN CODE IN RELAY SAME AS START CODE?? {hasJoinCode.ToString()}");
+
+					if (hasJoinCode && !IsLobbyHost())  // Only run for joined clients automatically.
 					{
-						relayManager.JoinCode = CreatedOrJoinedLobby.Data["StartCode"].Value;
-						relayManager.StartClient();
+						relayManager.JoinCode = joinCode;
+						relayManager.StartClient();		// START AND JOIN THE GAME
 					}
 				}
 			}
@@ -431,6 +444,19 @@ public class LobbyManager : MonoBehaviour
 	}
 
 
+	public async void UpdateLobbyRelayJoinCode()
+	{
+		Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(CreatedOrJoinedLobby.Id, new UpdateLobbyOptions
+		{
+			Data = new Dictionary<string, DataObject>
+			{
+				{"StartCode", new DataObject(DataObject.VisibilityOptions.Member, relayManager.JoinCode) }
+			}
+		});
+
+		CreatedOrJoinedLobby = lobby;
+	}
+	
 	public async void StartRelayLobbyGame()
 	{
 		if (IsLobbyHost())
@@ -439,18 +465,6 @@ public class LobbyManager : MonoBehaviour
 			{
 				Debug.Log("Start Game");
 				relayManager.StartHost();
-				string relayCode = relayManager.JoinCode;
-
-				Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(CreatedOrJoinedLobby.Id, new UpdateLobbyOptions
-				{
-					Data = new Dictionary<string, DataObject>
-					{
-						{"StartCode", new DataObject(DataObject.VisibilityOptions.Member, relayCode) }
-					}
-				});
-
-				CreatedOrJoinedLobby = lobby;
-
 			}
 			catch (LobbyServiceException e)
 			{

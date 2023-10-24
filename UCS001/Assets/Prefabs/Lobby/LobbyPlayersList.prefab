@@ -2459,6 +2459,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lobbyManager: {fileID: 0}
+  startButton: {fileID: 3393857326041317949}
+  editLobbyButton: {fileID: 8611513376208747588}
   playerSingleRecordPrefab: {fileID: 7327336291947662084, guid: 19a6d274112ef6847bc19b4ebb8869ec, type: 3}
   container: {fileID: 3903399738103838227}
   lobbyNameTxt: {fileID: 7776175873352871014}

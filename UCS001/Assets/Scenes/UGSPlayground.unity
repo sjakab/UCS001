@@ -524,6 +524,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6595062553278909842, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 719203995}
     - target: {fileID: 7119030430792365787, guid: 20915d7169dd2e449ae49baff3961b99, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1864,7 +1868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c1a95873c7a01a4fb3f31b0f0cc8dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  relayManager: {fileID: 0}
+  relayManager: {fileID: 2063511582}
   heartbeatIntervalInSeconds: 30
   pollForLobbyUpdatesIntervalInSeconds: 3
   AssignedPlayerName: 
@@ -2432,7 +2436,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6582065174530431975, guid: 1ab895473ddf6d34fab38c0848016843, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6682359914016400085, guid: 1ab895473ddf6d34fab38c0848016843, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -5444,9 +5448,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8afcd148ae6c9f947a0497f7766a45c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _networkManager: {fileID: 755927852}
-  _displayJoinCode: {fileID: 917085711}
-  _inputJoinCode: {fileID: 1991917177}
+  networkManager: {fileID: 755927852}
+  displayJoinCode: {fileID: 917085711}
+  inputJoinCode: {fileID: 1991917177}
   HostJoinGame: {fileID: 11400000, guid: 8fe1a3679cf50034eb551437136f6dd9, type: 2}
   BackToAuthentication: {fileID: 11400000, guid: bf3bea0f20249e24f864f74cf4be39c0, type: 2}
   MaxNumberOfPlayers: 4
