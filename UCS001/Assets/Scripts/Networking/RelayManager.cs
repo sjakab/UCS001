@@ -38,7 +38,7 @@ public class RelayManager : MonoBehaviour
         networkManager.OnServerStarted -= onStartedRelayGame;
         networkManager.OnClientStarted -= OnClientJoinedRelayGame;
 
-        if (networkManager.IsListening || networkManager.IsClient || networkManager.IsServer || networkManager.IsHost)
+        if (networkManager.IsListening || networkManager.IsClient)
         {
             networkManager.Shutdown();
         }

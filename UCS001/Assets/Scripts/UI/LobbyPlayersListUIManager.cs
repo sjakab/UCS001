@@ -11,6 +11,7 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 	[SerializeField] private LobbyManager lobbyManager;
 	[SerializeField] private GameObject startButton;
 	[SerializeField] private GameObject editLobbyButton;
+	[SerializeField] private GameObject gameHUD;
 	[SerializeField] private GameObject playerSingleRecordPrefab;
 	private List<GameObject> playerRecords;
 	[SerializeField] private Transform container;
@@ -136,6 +137,7 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 		Debug.Log("LOBBY STARTED A GAME SERVER!!");
 		playersPanel.SetActive(false);
 		lobbyManager.UpdateLobbyRelayJoinCode();
+		gameHUD.SetActive(true);
 	}
 	
 	private void OnGameClientStarted()
@@ -143,5 +145,6 @@ public class LobbyPlayersListUIManager : MonoBehaviour
 		Debug.Log("LOBBY JOINED A GAME!!");
 		playersPanel.SetActive(false);
 		lobbyManager.RelayManager.DisplayJoinCode();
+		gameHUD.SetActive(true);
 	}
 }

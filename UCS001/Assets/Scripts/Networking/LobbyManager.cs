@@ -104,6 +104,15 @@ public class LobbyManager : MonoBehaviour
 			}
 	}
 
+	public void ExitGame()
+	{
+		var networkManager = NetworkManager.Singleton;
+		if (networkManager.IsListening || networkManager.IsClient)
+		{
+			NetworkManager.Singleton.Shutdown();
+		}
+	}
+
 	public async void CreateLobby(string lobbyName, string gameMode)
 	{
 		Debug.Log("TESTING CREATE LOBBBY!");

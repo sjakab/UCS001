@@ -55,6 +55,7 @@ public class LobbyListUIManager : MonoBehaviour
 			if (i >= lobbyRecords.Count)
 			{
 				GameObject lobbySingleRecordGO = Instantiate(lobbySingleRecordPrefab, container);
+				lobbySingleRecordGO.SetActive(true);
 				lrc = lobbySingleRecordGO.GetComponent<LobbyRecordConfigurator>();
 				lrc.LobbyId = lobbyManager.QueriedLobbies[i].Id;
 				lrc.LobbyName.text = lobbyManager.QueriedLobbies[i].Name;
