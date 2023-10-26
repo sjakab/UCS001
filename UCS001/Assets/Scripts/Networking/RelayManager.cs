@@ -8,8 +8,6 @@ using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
 using TMPro;
-using Unity.VisualScripting;
-using WebSocketSharp;
 
 public class RelayManager : MonoBehaviour
 {
@@ -122,8 +120,8 @@ public class RelayManager : MonoBehaviour
         set { inputJoinCode.text = RelayJoinCode = value; }
         get
         {
-            if (!inputJoinCode.text.IsNullOrEmpty() && 
-                (RelayJoinCode.IsNullOrEmpty() || RelayJoinCode == "0"))
+            if (!string.IsNullOrEmpty(inputJoinCode.text) && 
+                (string.IsNullOrEmpty(RelayJoinCode) || RelayJoinCode == "0"))
             {
                 RelayJoinCode = inputJoinCode.text;
             }
