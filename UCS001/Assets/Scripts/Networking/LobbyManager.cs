@@ -37,6 +37,9 @@ public class LobbyManager : MonoBehaviour
 
 	private string LobbyName;
 
+	[SerializeField] private SOEvent _OnHostExitGameEvent;
+	[SerializeField] private SOEvent _OnClientExitGameEvent;
+
 	// Methods
 	// ///////////////////////////////////////////////////////
 	#region methods
@@ -107,10 +110,30 @@ public class LobbyManager : MonoBehaviour
 	public void ExitGame()
 	{
 		var networkManager = NetworkManager.Singleton;
-		if (networkManager.IsListening || networkManager.IsClient)
+
+		if (networkManager.IsHost)
 		{
 			NetworkManager.Singleton.Shutdown();
+			relayManager.JoinCode = "0";
+			_OnHostExitGameEvent?.TriggerEvent();
 		}
+		else if (networkManager.IsClient)
+		{
+			NetworkManager.Singleton.OnClientStopped -= OnClientDisconnected;
+			NetworkManager.Singleton.Shutdown();
+			relayManager.JoinCode = "0";
+			LeaveLobby();
+			_OnClientExitGameEvent?.TriggerEvent();
+		}
+	}
+
+	void OnClientDisconnected(bool bIsHost)
+	{
+		NetworkManager.Singleton.OnClientStopped -= OnClientDisconnected;
+		
+		//Host exited the game and the client was disconnected
+		//Call _OnHostExitGameEvent to go to the PlayerList UI in the lobby 
+		_OnHostExitGameEvent?.TriggerEvent();	
 	}
 
 	public async void CreateLobby(string lobbyName, string gameMode)
@@ -430,6 +453,7 @@ public class LobbyManager : MonoBehaviour
 					{
 						relayManager.JoinCode = joinCode;
 						relayManager.StartClient();		// START AND JOIN THE GAME
+						NetworkManager.Singleton.OnClientStopped += OnClientDisconnected;
 					}
 				}
 			}
