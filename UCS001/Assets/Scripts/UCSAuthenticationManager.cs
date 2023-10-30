@@ -8,11 +8,17 @@ using Unity.Services.Core;
 
 public class UCSAuthenticationManager : MonoBehaviour
 {
+    enum ESignInMethod : int
+    {
+        Anonymous = 0,
+        UnityAccount
+    }
+
     public SOEvent UserAuthenticatedAndSignedIn;
     public SOEvent UserAuthenticationFailed;
     public SOEvent UserAuthenticationExpired;
     public SOEvent UserSignedOut;
-    public SOEvent GoToEnterGame;
+    public SOEvent ContinueToEnterGame;
 
     // Start is called before the first frame update
      async void Start()
@@ -36,14 +42,47 @@ public class UCSAuthenticationManager : MonoBehaviour
         AuthenticationService.Instance.Expired += handleAuthExpired;
     }
 
-    public async void OnSignInAnon()
+    public async void AuthenticateAsync(int method)
+    {
+        switch ((ESignInMethod)method)
+        {
+            case ESignInMethod.Anonymous:
+                await OnSignInAnon();
+                break;
+            case ESignInMethod.UnityAccount:
+                await OnSignInUnity();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public async Task OnSignInAnon()
     {
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
 
-    public async void OnSignInUnity()
+    public async Task OnSignInUnity()
     {
         await PlayerAccountService.Instance.StartSignInAsync();
+    }
+
+    public void GoToEnterGame()
+    {
+        ContinueToEnterGame?.TriggerEvent();
+    }
+
+    public void SignOut()
+    {
+        if (AuthenticationService.Instance.IsSignedIn)
+        {
+            AuthenticationService.Instance.SignOut();
+        }
+
+        if (PlayerAccountService.Instance.IsSignedIn)
+        {
+            PlayerAccountService.Instance.SignOut();
+        }
     }
 
     private void handleSignIn()
