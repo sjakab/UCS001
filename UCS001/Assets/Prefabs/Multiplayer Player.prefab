@@ -2321,9 +2321,10 @@ GameObject:
   - component: {fileID: 3482538069338181493}
   - component: {fileID: 8262787154382351193}
   - component: {fileID: 1474389377557804623}
-  - component: {fileID: 7925004503950016350}
-  - component: {fileID: 4159071137557964574}
-  - component: {fileID: 4780768569225728501}
+  - component: {fileID: -6845286919661320760}
+  - component: {fileID: 6278906493215035796}
+  - component: {fileID: 3599975123521038535}
+  - component: {fileID: 6261234623202523617}
   m_Layer: 8
   m_Name: Multiplayer Player
   m_TagString: Player
@@ -2507,7 +2508,7 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &7925004503950016350
+--- !u!114 &-6845286919661320760
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2527,7 +2528,7 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &4159071137557964574
+--- !u!114 &6278906493215035796
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2536,7 +2537,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8266811175953589644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 142cce6b7ac6d634fbfe573f15438fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 1
@@ -2557,7 +2558,7 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &4780768569225728501
+--- !u!114 &3599975123521038535
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2566,11 +2567,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 8266811175953589644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Script: {fileID: 11500000, guid: ad5c98f9bc98b724e8eeb27a1df4ff43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TransitionStateInfoList: []
   m_Animator: {fileID: 3546207854135306222}
+--- !u!114 &6261234623202523617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8266811175953589644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25968a430b34eb24b9e098b9dc3411b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  networkObj: {fileID: -6845286919661320760}
+  charController: {fileID: 1420995361585247949}
+  localPlayerGOsToEnable:
+  - {fileID: 6545397881591188446, guid: 8e4312100b57fd5419e4dcb85252f8fd, type: 3}
+  localPlayerComponentsToEnable:
+  - {fileID: 8262787154382351193}
+  - {fileID: 1474389377557804623}
+  localPlayerGOsToDisable: []
+  localPlayerComponentsToDisable: []
 --- !u!1 &8450601981403028942
 GameObject:
   m_ObjectHideFlags: 0
